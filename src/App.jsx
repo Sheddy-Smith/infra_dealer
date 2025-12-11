@@ -3,6 +3,8 @@ import { HelmetProvider } from 'react-helmet-async'
 import { useAuth } from './contexts/AuthContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import MobileBottomNav from './components/MobileBottomNav'
+import InstallPrompt from './components/InstallPrompt'
 import Home from './pages/Home'
 import About from './pages/About'
 import Login from './pages/Login'
@@ -63,6 +65,8 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <MobileBottomNav />
+        <InstallPrompt />
       </div>
     </HelmetProvider>
   )

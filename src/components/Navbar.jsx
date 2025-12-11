@@ -19,31 +19,31 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <header className="bg-primary shadow-md sticky top-0 z-50 safe-area-top">
       <div className="container">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-14 md:h-16">
           <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-            <Truck size={32} className="text-primary" />
-            <span className="text-2xl font-bold text-text-primary">InfraDealer</span>
+            <Truck size={28} className="text-accent" />
+            <span className="text-xl md:text-2xl font-bold text-white">InfraDealer</span>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link 
               to="/" 
-              className={`font-medium hover:text-primary transition-colors ${isActive('/') ? 'text-primary font-semibold' : 'text-text-primary'}`}
+              className={`font-semibold hover:text-accent transition-colors ${isActive('/') ? 'text-accent' : 'text-white'}`}
             >
               Home
             </Link>
             <Link 
               to="/listings" 
-              className={`font-medium hover:text-primary transition-colors ${isActive('/listings') ? 'text-primary font-semibold' : 'text-text-primary'}`}
+              className={`font-semibold hover:text-accent transition-colors ${isActive('/listings') ? 'text-accent' : 'text-white'}`}
             >
               Browse Equipment
             </Link>
             <Link 
               to="/verified" 
-              className={`font-medium hover:text-primary transition-colors ${isActive('/verified') ? 'text-primary font-semibold' : 'text-text-primary'}`}
+              className={`font-semibold hover:text-accent transition-colors ${isActive('/verified') ? 'text-accent' : 'text-white'}`}
             >
               Verified
             </Link>
@@ -51,53 +51,52 @@ const Navbar = () => {
               <>
                 <Link 
                   to="/post-ad" 
-                  className="btn btn-accent text-white px-5 py-2.5 text-sm"
+                  className="btn btn-accent px-5 py-2 text-sm font-bold"
                 >
                   <PlusCircle size={18} />
-                  Post Ad
+                  SELL
                 </Link>
               </>
             ) : (
               <>
                 <Link 
                   to="/login" 
-                  className="btn btn-outline px-5 py-2.5 text-sm"
+                  className="text-white font-semibold hover:text-accent transition-colors"
                 >
                   Login
-                </Link>
-                <Link 
-                  to="/register" 
-                  className="btn btn-primary text-white px-5 py-2.5 text-sm"
-                >
-                  Register
                 </Link>
               </>
             )}
           </nav>
 
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden text-white p-2"
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+
           {/* User Menu */}
           {isAuthenticated && (
-            <div className="hidden md:flex items-center space-x-5">
-              <Link to="/wallet" className="flex items-center space-x-2 px-3 py-1.5 bg-blue-50 text-primary rounded-lg hover:bg-blue-100 transition-colors font-medium">
-                <Wallet size={18} />
-                <span>5 Tokens</span>
-              </Link>
+            <div className="hidden md:flex items-center space-x-4">
               <NotificationBell />
               <div className="relative group">
-                <button className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-text-primary">
+                <button className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-primary-light hover:bg-primary-dark transition-colors text-white">
                   <User size={20} />
-                  <span className="font-medium">{user?.name || 'User'}</span>
+                  <span className="font-semibold">{user?.name || 'User'}</span>
                 </button>
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg py-2 z-10 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 border border-gray-100">
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl py-2 z-10 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 border border-border-light">
                   <Link 
                     to="/profile" 
-                    className="flex items-center px-4 py-2.5 text-sm text-text-primary hover:bg-gray-50 transition-colors font-medium"
+                    className="flex items-center px-4 py-2.5 text-sm text-text-primary hover:bg-bg transition-colors font-semibold"
                   >
                     <User size={16} className="mr-3" />
                     My Profile
                   </Link>
                   <Link 
-                    to="/my-listings" 
+                    to="/my-listings"
                     className="flex items-center px-4 py-2.5 text-sm text-text-primary hover:bg-gray-50 transition-colors font-medium"
                   >
                     <Truck size={16} className="mr-3" />
