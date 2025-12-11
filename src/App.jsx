@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 import { useAuth } from './contexts/AuthContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -33,35 +34,37 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-grow">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/onboarding" element={<Onboarding />} />
-          <Route path="/listings" element={<Listings />} />
-          <Route path="/listings/:id" element={<ListingDetail />} />
-          <Route path="/broker/register" element={<BrokerRegister />} />
-          <Route path="/brokers/:id" element={<BrokerProfile />} />
-          <Route path="/verified" element={<VerifiedPage />} />
-          {isAuthenticated ? (
-            <>
-              <Route path="/post-ad" element={<PostAd />} />
-              <Route path="/wallet" element={<Wallet />} />
-              <Route path="/my-listings" element={<MyListings />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/broker/dashboard" element={<BrokerDashboard />} />
-            </>
-          ) : null}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
+    <HelmetProvider>
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/onboarding" element={<Onboarding />} />
+            <Route path="/listings" element={<Listings />} />
+            <Route path="/listings/:id" element={<ListingDetail />} />
+            <Route path="/broker/register" element={<BrokerRegister />} />
+            <Route path="/brokers/:id" element={<BrokerProfile />} />
+            <Route path="/verified" element={<VerifiedPage />} />
+            {isAuthenticated ? (
+              <>
+                <Route path="/post-ad" element={<PostAd />} />
+                <Route path="/wallet" element={<Wallet />} />
+                <Route path="/my-listings" element={<MyListings />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/broker/dashboard" element={<BrokerDashboard />} />
+              </>
+            ) : null}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </HelmetProvider>
   )
 }
 

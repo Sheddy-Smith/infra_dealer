@@ -1,32 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAdminAuth } from '../contexts/AdminAuthContext'
 import { Shield, Lock, Phone, Loader2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 const AdminLogin = () => {
-  const [phone, setPhone] = useState('9999999999')
-  const [password, setPassword] = useState('admin123')
+  const [phone, setPhone] = useState('')
+  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const { login } = useAdminAuth()
   const navigate = useNavigate()
-
-  // Auto-login on component mount
-  useEffect(() => {
-    const autoLogin = async () => {
-      if (phone && password) {
-        setLoading(true)
-        const result = await login({ phone, password })
-        setLoading(false)
-
-        if (result.success) {
-          toast.success('Auto-login successful')
-          navigate('/dashboard')
-        }
-      }
-    }
-    autoLogin()
-  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()

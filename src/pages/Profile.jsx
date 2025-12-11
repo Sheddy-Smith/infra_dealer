@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useAuth } from '../contexts/AuthContext'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { authAPI, walletAPI, SERVER_BASE_URL } from '../services/api'
@@ -11,6 +12,7 @@ import {
 import toast from 'react-hot-toast'
 import LoadingSpinner from '../components/LoadingSpinner'
 import ListingCard from '../components/ListingCard'
+import { getPageMeta } from '../utils/seo'
 
 
 const Profile = () => {
@@ -222,9 +224,18 @@ const Profile = () => {
   }
 
   const completionPercentage = getProfileCompletion()
+  const pageMeta = getPageMeta('profile')
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Helmet>
+        <title>{pageMeta.title}</title>
+        <meta name="description" content={pageMeta.description} />
+        <meta name="keywords" content={pageMeta.keywords} />
+        <link rel="canonical" href={pageMeta.url} />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+
       <div className="container py-8">
         {/* Profile Header */}
         <div className="bg-gradient-to-r from-primary to-blue-600 rounded-2xl p-8 mb-8 text-white shadow-xl">

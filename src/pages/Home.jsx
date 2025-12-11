@@ -1,9 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { listingsAPI } from '../services/api'
 import { Search, MapPin, Shield, Award, CheckCircle, ChevronRight, TrendingUp } from 'lucide-react'
 import ListingCard from '../components/ListingCard'
 import LoadingSpinner from '../components/LoadingSpinner'
+import { getPageMeta } from '../utils/seo'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -95,8 +97,25 @@ const Home = () => {
     navigate(`/listings?${params.toString()}`)
   }
 
+  const pageMeta = getPageMeta('home')
+
   return (
     <div className="bg-bg">
+      <Helmet>
+        <title>{pageMeta.title}</title>
+        <meta name="description" content={pageMeta.description} />
+        <meta name="keywords" content={pageMeta.keywords} />
+        <link rel="canonical" href={pageMeta.url} />
+        
+        <meta property="og:title" content={pageMeta.title} />
+        <meta property="og:description" content={pageMeta.description} />
+        <meta property="og:url" content={pageMeta.url} />
+        <meta property="og:type" content="website" />
+        
+        <meta name="twitter:title" content={pageMeta.title} />
+        <meta name="twitter:description" content={pageMeta.description} />
+      </Helmet>
+
       {/* Hero Search Section - OLX Style */}
       <section className="bg-gradient-to-br from-blue-600 via-primary to-blue-700 text-white py-16 md:py-24">
         <div className="container">
@@ -240,21 +259,6 @@ const Home = () => {
               ))}
             </div>
           )}
-        </div>
-      </section>
-
-      {/* Ad/Promo Banner */}
-      <section className="py-16 bg-gradient-to-r from-accent to-red-600">
-        <div className="container">
-          <div className="flex flex-col md:flex-row items-center justify-between text-white gap-6">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-3">Want to Sell Your Equipment?</h2>
-              <p className="text-xl text-red-50">Post your ad for 30 days and reach thousands of verified buyers • Optional broker hire available</p>
-            </div>
-            <Link to="/post-ad" className="btn bg-white text-accent hover:bg-gray-100 px-8 py-4 rounded-lg font-bold text-lg shadow-xl whitespace-nowrap">
-              Post Your Ad Free →
-            </Link>
-          </div>
         </div>
       </section>
 

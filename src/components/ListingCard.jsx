@@ -42,8 +42,9 @@ const ListingCard = ({ listing }) => {
               ? `${SERVER_BASE_URL}/uploads/${listing.images[0]}` 
               : 'https://via.placeholder.com/400x400?text=No+Image'
             }
-            alt={listing.title}
+            alt={`${listing.title} - ${listing.category} for sale in ${listing.city}${listing.year ? ` (${listing.year})` : ''}`}
             className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
           />
           <div className="absolute top-3 left-3 bg-accent text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-lg">
             {listing.category}

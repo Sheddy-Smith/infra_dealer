@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import { listingsAPI, SERVER_BASE_URL } from '../services/api'
 import { useAuth } from '../contexts/AuthContext'
 import { 
@@ -27,6 +28,7 @@ import toast from 'react-hot-toast'
 import LoadingSpinner from '../components/LoadingSpinner'
 import ListingCard from '../components/ListingCard'
 import HireBrokerModal from '../components/HireBrokerModal'
+import { getPageMeta, generateProductSchema, generateBreadcrumbSchema } from '../utils/seo'
 
 const ListingDetail = () => {
   const { id } = useParams()
@@ -205,8 +207,44 @@ const ListingDetail = () => {
     ? listing.images 
     : ['placeholder.jpg']
 
+  const pageMeta = getPageMeta('listing-detail', { listing })
+  const productSchema = generateProductSchema(listing)
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: 'https://infradealer.com' },
+    { name: 'Listings', url: 'https://infradealer.com/listings' },
+    { name: listing.category, url: `https://infradealer.com/listings?category=${listing.category}` },
+    { name: listing.title, url: `https://infradealer.com/listing/${listing.id}` }
+  ])
+
   return (
     <div className="bg-gray-50 min-h-screen">
+      <Helmet>
+        <title>{pageMeta.title}</title>
+        <meta name="description" content={pageMeta.description} />
+        <meta name="keywords" content={pageMeta.keywords} />
+        <link rel="canonical" href={pageMeta.url} />
+        
+        <meta property="og:title" content={pageMeta.title} />
+        <meta property="og:description" content={pageMeta.description} />
+        <meta property="og:url" content={pageMeta.url} />
+        <meta property="og:type" content="product" />
+        {pageMeta.image && <meta property="og:image" content={pageMeta.image} />}
+        <meta property="product:price:amount" content={listing.price} />
+        <meta property="product:price:currency" content="INR" />
+        
+        <meta name="twitter:title" content={pageMeta.title} />
+        <meta name="twitter:description" content={pageMeta.description} />
+        {pageMeta.image && <meta name="twitter:image" content={pageMeta.image} />}
+        <meta name="twitter:card" content="summary_large_image" />
+        
+        <script type="application/ld+json">
+          {JSON.stringify(productSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      </Helmet>
+
       {/* Breadcrumb Navigation */}
       <div className="bg-white border-b border-gray-200">
         <div className="container py-3">

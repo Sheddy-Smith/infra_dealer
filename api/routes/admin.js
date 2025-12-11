@@ -2,6 +2,7 @@ import express from 'express';
 import { body, validationResult } from 'express-validator';
 import { db } from '../config/database.js';
 import { authMiddleware, adminMiddleware } from '../middleware/auth.js';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
@@ -368,7 +369,6 @@ router.post('/login', async (req, res) => {
     }
 
     // Generate token
-    const jwt = require('jsonwebtoken');
     const token = jwt.sign(
       { id: user.id, role: user.role },
       process.env.JWT_SECRET || 'your-secret-key',

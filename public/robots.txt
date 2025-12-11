@@ -1,0 +1,19 @@
+# InfraDealer Robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /profile
+Disallow: /wallet
+Disallow: /post-ad
+Disallow: /my-listings
+Disallow: /login
+Disallow: /register
+Disallow: /onboarding
+Disallow: /broker/dashboard
+
+# Sitemap
+Sitemap: https://infradealer.com/sitemap.xml
+
+# Crawl rate
+Crawl-delay: 1

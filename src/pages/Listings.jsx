@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import { listingsAPI } from '../services/api'
 import ListingCard from '../components/ListingCard'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { Search, ChevronDown, ChevronUp, X, SlidersHorizontal, MapPin } from 'lucide-react'
+import { getPageMeta } from '../utils/seo'
 
 const Listings = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -245,6 +247,11 @@ const Listings = () => {
     
     return summary
   }
+
+  const pageMeta = getPageMeta('listings', { 
+    category: categories.find(c => c.id === filters.category)?.name || '',
+    city: cities.find(c => c.id === filters.city)?.name || ''
+  })
 
   const FilterSidebar = () => (
     <div className="bg-white rounded-lg shadow-sm sticky top-20">
@@ -577,6 +584,21 @@ const Listings = () => {
 
           {/* Main Content */}
           <main className="flex-1">
+            <Helmet>
+              <title>{pageMeta.title}</title>
+              <meta name="description" content={pageMeta.description} />
+              <meta name="keywords" content={pageMeta.keywords} />
+              <link rel="canonical" href={pageMeta.url} />
+              
+              <meta property="og:title" content={pageMeta.title} />
+              <meta property="og:description" content={pageMeta.description} />
+              <meta property="og:url" content={pageMeta.url} />
+              <meta property="og:type" content="website" />
+              
+              <meta name="twitter:title" content={pageMeta.title} />
+              <meta name="twitter:description" content={pageMeta.description} />
+            </Helmet>
+
             {/* Results Summary & Sort */}
             <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
